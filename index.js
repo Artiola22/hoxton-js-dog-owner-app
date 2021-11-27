@@ -12,41 +12,70 @@ console.log(dogs);
 
 
 
+console.log(dogs)
 
 
 
-function createDogCards(dog) {
-    const mainDogSection = document.querySelector('main__dog-section')
+function createDogTag (dog) {
+  const liEl = document.createElement('li')
+  liEl.setAttribute('class', 'dog-list__button')
+  liEl.textContent = dog.name
+  
+  liEl.addEventListener('click', function () {
+      displayDogInfo(dog)
+      
+  })
+  const dogListUl = document.querySelector('.dogs-list')
+  dogListUl.append(liEl)
+}
+ for (const dog of dogs) {
+     createDogTag(dog)
+ }
+
+  function displayDogInfo(dog) {
+      const sectionEl = document.querySelector('.main__dog-section')
+      sectionEl.innerHTML = ''
+
+    const titleEl = document.createElement('h2')
+    titleEl.textContent = dog.name
     
-
-    const nameEl = document.createElement('h2')
-    nameEl.textContent = dog.name
     
-    
-    const divEl = document.createElement('img')
-    dogImageEl.setAttribute('src', dog.image)
-    dogImageEl.setAttribute('alt', '')
+    const imageEl = document.createElement('img')
+    imageEl.setAttribute('src', dog.image)
+    imageEl.setAttribute('alt', '')
 
-    const dogInfoEl = document.createElement('div')
-    dogInfoEl.setAttribute('class', 'main__dog-section__desc')
+    const descEl = document.createElement('div')
+    descEl.setAttribute('class', 'main__dog-section__desc')
 
 
-    const dogBioTitleEl = document.createElement('h3')
-    dogBioTitleEl.textContent = 'Bio'
+    const bioTitle = document.createElement('h3')
+    bioTitle.textContent = 'Bio'
 
-    const dogBioEl = document.createElement('p')
-    dogBioEl.textContent= dog.bio
+    const textEl = document.createElement('p')
+    textEl.textContent= dog.bio
 
-    dogInfoEl.append(dogBioTitleEl)
-    mainDogSection.append(dogBioEl)
-    dogInfoEl.append(dogSelector(dog))
+    descEl.append(bioTitle, textEl)
 
+    const naughtyEl = document.createElement('p')
+    const emEl = document.createElement('em')
+    emEl.textContent = 'Is naughty?'
+    naughtyEl.append(emEl, dog.isGoodDog? ' No!' : ' Yes!')
+
+    const goodButton = document.createElement('button')
+    goodButton.textContent = dog.isGoodDog ? 'Bad dog!' : 'Good dog!'
+
+    goodButton.addEventListener('click', function (){
+        toggleGoodDog(dog)
+    })
+ sectionEl.append(titleEl, imageEl, descEl, naughtyEl, goodButton)
 }
 
-function createDogCards() {
-    for (const dog of dogs) {
-        createDogCards(dog)
-    }
-}
-createDogCards()
+
+ function toggleGoodDog (dog) {
+     dog.isGoodDog = !dog.isGoodDog
+     displayDogInfo(dog)
+ }
+
+
+
 

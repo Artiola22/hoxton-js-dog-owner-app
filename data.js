@@ -68,5 +68,5 @@ const dogs = [
     }
   ];
   
-  window.dogs = dogs;
+  
   
